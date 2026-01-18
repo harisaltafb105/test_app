@@ -10,7 +10,7 @@ from typing import AsyncGenerator
 from sqlmodel import SQLModel
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
 from sqlalchemy.pool import NullPool
-from backend.config import settings
+from config import settings
 
 # Check if running on Vercel serverless
 IS_VERCEL = os.environ.get("VERCEL", "0") == "1"

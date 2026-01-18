@@ -11,10 +11,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 import bcrypt
 import jwt
 
-from backend.database import get_session
-from backend.models import User
-from backend.schemas import UserRegister, UserLogin, AuthResponse, UserResponse
-from backend.config import settings
+from database import get_session
+from models import User
+from schemas import UserRegister, UserLogin, AuthResponse, UserResponse
+from config import settings
 
 
 router = APIRouter(prefix="/auth", tags=["authentication"])

@@ -11,8 +11,8 @@ from fastapi.exceptions import RequestValidationError
 from pydantic import ValidationError
 import asyncpg
 
-from backend.database import create_db_and_tables
-from backend.config import settings
+from database import create_db_and_tables
+from config import settings
 
 
 @asynccontextmanager
@@ -157,7 +157,7 @@ async def health_check():
 
 
 # Import and include routers
-from backend.routers import tasks, auth
+from routers import tasks, auth
 
 app.include_router(auth.router)
 app.include_router(tasks.router)

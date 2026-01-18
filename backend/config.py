@@ -10,15 +10,32 @@ from pathlib import Path
 from typing import Optional
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-# Find project root (parent of backend directory)
-PROJECT_ROOT = Path(__file__).parent.parent
+# Backend directory (where this file lives)
+BACKEND_DIR = Path(__file__).parent
 
 # Check if running on Vercel (Vercel sets this automatically)
 IS_VERCEL = os.environ.get("VERCEL", "0") == "1"
 
-# Only use .env file if it exists and we're not on Vercel
-env_file_path = PROJECT_ROOT / ".env"
-USE_ENV_FILE = env_file_path.exists() and not IS_VERCEL
+# Look for .env in multiple locations:
+# 1. Backend directory itself (for standalone deployment)
+# 2. Parent directory (for monorepo setup with root .env)
+def find_env_file() -> Optional[Path]:
+    if IS_VERCEL:
+        return None
+
+    # Check backend/.env first
+    backend_env = BACKEND_DIR / ".env"
+    if backend_env.exists():
+        return backend_env
+
+    # Then check parent (project root)/.env
+    root_env = BACKEND_DIR.parent / ".env"
+    if root_env.exists():
+        return root_env
+
+    return None
+
+env_file_path = find_env_file()
 
 
 class Settings(BaseSettings):
@@ -43,7 +60,7 @@ class Settings(BaseSettings):
     frontend_url: Optional[str] = None
 
     model_config = SettingsConfigDict(
-        env_file=str(env_file_path) if USE_ENV_FILE else None,
+        env_file=str(env_file_path) if env_file_path else None,
         env_file_encoding="utf-8",
         case_sensitive=False,
         extra="ignore"

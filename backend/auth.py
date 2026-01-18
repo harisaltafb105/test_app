@@ -9,7 +9,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 import jwt
 from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
 
-from backend.config import settings
+from config import settings
 
 
 # HTTP Bearer security scheme

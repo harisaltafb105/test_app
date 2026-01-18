@@ -1,6 +1,5 @@
-# Ignore files not needed for backend deployment
+# Ignore files not needed for deployment
 .venv/
-frontend/
 *.pyc
 __pycache__/
 .pytest_cache/
@@ -12,7 +11,4 @@ build/
 .git/
 .env
 .env.local
-*.md
-!requirements.txt
 tests/
-backend/tests/
